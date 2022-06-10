@@ -15,7 +15,7 @@
 
   	// Misc:
 	INC,  // INC, REG  
-	DEC,  //
+	DEC,  // DEC, REG
 	SUF,  // (Setup stack frame)
 	
   	Control-flow:
