@@ -13,13 +13,13 @@
 	IMUL_IMM, // IMUL_IMM, IMM32/IMM64, REG
 	PUSH_IMM, // PUSH_IMM, IMM32/IMM64
 
-  // Misc:
+  	// Misc:
 	INC,  // INC, REG  
 	DEC,  //
 	SUF,  // (Setup stack frame)
 	
-  Control-flow:
-  CALL, //
+  	Control-flow:
+  	CALL, //
 	RET,  //
 	JMP,  //
 	CMP,  //
