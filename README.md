@@ -1,15 +1,15 @@
 # LVM
 32-bit RISC-based virtual machine made in C 
 
-# Instruction set:
-	Immediate addressing mode opcodes
+# Instruction set synax:
+	Immediate addressing mode opcodes:
 	MOV_IMM,  // MOV_IMM,  IMM32/IMM64, REG
 	ADD_IMM,  // ADD_IMM,  IMM32/IMM64, REG
 	SUB_IMM,  // SUB_IMM,  IMM32/IMM64, REG
 	MUL_IMM,  // MUL_IMM,  IMM32/IMM64, REG
 	DIV_IMM,  // DIV_IMM,  IMM32/IMM64, REG
-	IDIV_IMM, // IDIV_IMM, IMM32/IMM64, REG
-	IMUL_IMM, // IMUL_IMM, IMM32/IMM64, REG
+	IDIV_IMM, // IDIV_IMM, LA, REG
+	IMUL_IMM, // IMUL_IMM, LA, REG
 	PUSH_IMM, // PUSH_IMM, IMM32/IMM64
 	CMP_IMM,  // CMP_IMM,  REG, IMM32/IMM64
 
@@ -69,14 +69,14 @@
 	PUSHF_IMM,  // PUSHF_IMM,  FP64, FP_REG
 
 	// Floating point register instructions:
-	MOVSS_REG,  // MOVSS_REG,  REG, REG
-	ADDSS_REG,  // ADDSS_REG,  REG, REG
-	SUBSS_REG,  // SUBSS_REG,  REG, REG
-	MULSS_REG,  // MULSS_REG,  REG, REG
-	DIVSS_REG,  // DIVSS_REG,  REG, REG
-	IMULSS_REG, // IMULSS_REG, REG, REG
-	IDIVSS_REG, // IDIVSS_REG, REG, REG
-	FPOP_REG,   // FPOP_REG,   REG
+	MOVSS_REG,  // MOVSS_REG,  FP_REG, FP_REG
+	ADDSS_REG,  // ADDSS_REG,  FP_REG, FP_REG
+	SUBSS_REG,  // SUBSS_REG,  FP_REG, FP_REG
+	MULSS_REG,  // MULSS_REG,  FP_REG, FP_REG
+	DIVSS_REG,  // DIVSS_REG,  FP_REG, FP_REG
+	IMULSS_REG, // IMULSS_REG, X0, FP_REG
+	IDIVSS_REG, // IDIVSS_REG, X0, FP_REG
+	FPOP_REG,   // FPOP_REG,   FP_REG
 
 	// Floating point control flow:
 	FCMP,      // FCMP, FP_REG, FP_REG
