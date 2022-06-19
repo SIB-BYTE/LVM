@@ -89,6 +89,25 @@
 	FJL,       // FJL,  LABEL
 	FJLE,      // FJLE, LABEL
 
+# Registers:
+```
+// General purpose registers:
+LA = 0x00, // Accumlator register.
+LD = 0x01, // data index : data register.
+LC = 0x02, // Count register
+LS = 0x03, // Source index register
+LB = 0x04  // Base index register
+```
 
+```
+// Floating point registers:
+enum FPRs {
+	X0 = 0x00,
+	X1 = 0x01,
+	X2 = 0x02,
+	X3 = 0x03,
+	X4 = 0x04
+};
+``
 # Examples:
 
