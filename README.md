@@ -114,22 +114,42 @@ Addition:
 ```
 
 Subtraction:
+```c
 
+```
 Multplication:
+```c
 
+```
 Division:
+```c
 
+```
 Signed Multiplication:
+```c
 
+```
 Signed Division:
+```c
 
+```
 Negation:
+```c
 
+```
 Comparing immediates:
+```c
 
+```
 Comparing registers:
+```c
 
+```
 Incrementation:
+```c
 
+```
 Decrementation:
+```c
 
+```
