@@ -1,5 +1,5 @@
 # LVM
-32-bit RISC-based virtual machine made in C 
+32-bit CISC-based virtual machine made in C 
 
 # Instruction set synax:
 	Immediate addressing mode opcodes:
