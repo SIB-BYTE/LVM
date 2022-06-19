@@ -101,13 +101,35 @@ LB = 0x04  // Base index register
 
 ```
 // Floating point registers:
-enum FPRs {
-	X0 = 0x00,
-	X1 = 0x01,
-	X2 = 0x02,
-	X3 = 0x03,
-	X4 = 0x04
-};
-``
+X0 = 0x00,
+X1 = 0x01,
+X2 = 0x02,
+X3 = 0x03,
+X4 = 0x04
+```
 # Examples:
+Addition:
+```c
+
+```
+
+Subtraction:
+
+Multplication:
+
+Division:
+
+Signed Multiplication:
+
+Signed Division:
+
+Negation:
+
+Comparing immediates:
+
+Comparing registers:
+
+Incrementation:
+
+Decrementation:
 
