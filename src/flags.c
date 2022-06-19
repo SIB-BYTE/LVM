@@ -3,8 +3,8 @@
 void clear_flags(cpu_t *cpu)
 {
 	cpu->lf ^= cpu->lf;
-    cpu->zf ^= cpu->zf;
-    cpu->gf ^= cpu->gf;
+    	cpu->zf ^= cpu->zf;
+    	cpu->gf ^= cpu->gf;
 }
 
 void set_flags(cpu_t *cpu, long src, long dest)
