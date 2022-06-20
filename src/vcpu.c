@@ -43,7 +43,7 @@ void execute(cpu_t *cpu)
 	switch(opcode)
 	{
 		// Immedate addressing instructions:
-		case MOV_IMM:  cpu->registers[dst] =  src; cpu->ip += 2;	  break;
+		case MOV_IMM:  cpu->registers[dst] =  src; cpu->ip += 2;      break;
 		case ADD_IMM:  cpu->registers[dst] += src; cpu->ip += 2;      break;
 		case SUB_IMM:  cpu->registers[dst] -= src; cpu->ip += 2;      break;
 		case MUL_IMM:  cpu->registers[dst] *= src; cpu->ip += 2;      break;
@@ -55,38 +55,38 @@ void execute(cpu_t *cpu)
 		case JMP:  cpu->ip = src; break;
 		case CALL: push(cpu, cpu->ip); cpu->ip = cpu->registers[src];   cpu->ip++; break;
 		case RET:  return_address = pop(cpu); cpu->ip = return_address; cpu->ip++; break;
-		case CMP_IMM:  set_flags(cpu, src, cpu->registers[dst]); cpu->ip += 2;     break;
+		case CMP_IMM:  set_flags(cpu, src, cpu->registers[dst]); cpu->ip += 2;       break;
 		case CMP:      set_flags(cpu, cpu->registers[src], cpu->registers[dst]); cpu->ip += 2; break;
-		case JNE:
-					if(cpu->registers[src] != cpu->registers[dst]) { cpu->ip = src; }
-					else { cpu->ip++; }
-					cpu->ip += 2; break;
+		case JNE:       // Sorry I know this is hard to read but I tried :/
+				if(cpu->registers[src] != cpu->registers[dst]) { cpu->ip = src; }
+				else { cpu->ip++; }
+				cpu->ip += 2; break;
 
-		case JNZ:
-				   if(!cpu->zf) { cpu->ip = src; }
-				   else { cpu->ip++; }
-				   cpu->ip += 2; break;
+		case JNZ:			
+				if(!cpu->zf) { cpu->ip = src; }
+				else { cpu->ip++; }
+				cpu->ip += 2; break;
 
 		case JIE:
-				   if(cpu->registers[src] == cpu->registers[dst]) { cpu->ip = src; }
-				   else { cpu->ip++; }
-				   cpu->ip += 2; break;
+				if(cpu->registers[src] == cpu->registers[dst]) { cpu->ip = src; }
+				else { cpu->ip++; }
+				cpu->ip += 2; break;
 
 		case JG:
-				   if(cpu->gf) { cpu->ip = src; }
-				   else { cpu->ip++; }
-				   cpu->ip += 2; break;
+				if(cpu->gf) { cpu->ip = src; }
+				else { cpu->ip++; }
+				cpu->ip += 2; break;
 		case JL:
-					if(cpu->lf) { cpu->ip = src; }
-					else { cpu->ip++; }
-					cpu->ip += 2; break;
+				if(cpu->lf) { cpu->ip = src; }
+				else { cpu->ip++; }
+				cpu->ip += 2; break;
 
 		case JLE:  break;
 
 		case JGE:  break;
 
 		// Misc:
-		case NEG: cpu->registers[src] =  -(cpu->registers[src]); cpu->ip++;     break;
+		case NEG: cpu->registers[src] = -(cpu->registers[src]); cpu->ip++;     break;
 		case INC: cpu->registers[src]++; cpu->ip++; break;
 		case DEC: cpu->registers[src]--; cpu->ip++; break;
 		case SUF: /* Figure out how to do this */ ; break;
@@ -155,15 +155,15 @@ const char *bind_name(dword instruction)
 	  case INC:      return "INC";
 	  case DEC:      return "DEC";
 	  case SUF:      return "SUF";
-    case RET:      return "RET";
+    	  case RET:      return "RET";
 	  case CALL:     return "CALL";
-    case JMP:      return "JMP";
+    	  case JMP:      return "JMP";
 	  case JNE:      return "JNE";
 	  case JIE:      return "JIE";
 	  case JNZ:      return "JNZ";
 	  case JGE:      return "JGE";
-	  case JG:		   return "JG";
-	  case JL:		   return "JL";
+	  case JG:       return "JG";
+	  case JL:       return "JL";
 	  case JLE:      return "JLE";
 	  case NOP:      return "NOP";
 	  case SHR:      return "SHR";
@@ -176,10 +176,10 @@ const char *bind_name(dword instruction)
 	  case MOV_IMM:  return "MOV_IMM";
 	  case ADD_IMM:  return "ADD_IMM";
 	  case SUB_IMM:  return "SUB_IMM";
-    case MUL_IMM:  return "MUL_IMM";
-    case DIV_IMM:  return "DIV_IMM";
-    case IMUL_IMM: return "IMUL_IMM";
-    case IDIV_IMM: return "IDIV_IMM";
+    	  case MUL_IMM:  return "MUL_IMM";
+    	  case DIV_IMM:  return "DIV_IMM";
+     	  case IMUL_IMM: return "IMUL_IMM";
+    	  case IDIV_IMM: return "IDIV_IMM";
 	  case MOV_REG:  return "MOV_REG";
 	  case ADD_REG:  return "ADD_REG";
 	  case SUB_REG:  return "SUB_REG";
