@@ -3,7 +3,9 @@
 
 # TODO:
 1.) Implement an assembler so we can have labels and have string support.
+
 2.) Profit???
+
 3.) ???
 
 # What is a virtual machine?
