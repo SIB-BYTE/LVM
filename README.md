@@ -13,24 +13,36 @@ Whenever you think about the word "virtual machine" you most likely think of ope
 
 # Instruction set synax:
 ```
-Immediate addressing mode opcodes:
+// Immediate addressing opcodes:
 MOV_IMM,  // MOV_IMM,  IMM32/IMM64, REG
 ADD_IMM,  // ADD_IMM,  IMM32/IMM64, REG
 SUB_IMM,  // SUB_IMM,  IMM32/IMM64, REG
 MUL_IMM,  // MUL_IMM,  IMM32/IMM64, REG
 DIV_IMM,  // DIV_IMM,  IMM32/IMM64, REG
-IDIV_IMM, // IDIV_IMM, LA, REG
-IMUL_IMM, // IMUL_IMM, LA, REG
+IMUL_IMM, // IMUL_IMM, IMM32/IMM64, REG
+IDIV_IMM, // IDIV_IMM, IMM32/IMM64, REG
 PUSH_IMM, // PUSH_IMM, IMM32/IMM64
 CMP_IMM,  // CMP_IMM,  REG, IMM32/IMM64
+
+// Misc:
+NOR,  // NOR, REG
+NEG,  // NEG, REG
+CLF,  // CLF (clear flags)
+INC,  // INC, REG
+DEC,  // DEC, REG
+SUF,  // SUF (Setup stack frame)
+DSF,  // DSF (Destroy stack frame)
+HLT,  // HLT
+DUMP_STACK, // PRINT_STACK
+DUMP_CPU_INFO, // DUMP_CPU_INFO
 
 // Control-flow instructions:
 CALL, // CALL, LABEL
 RET,  // RET
 JMP,  // JMP, LABEL
 CMP,  // CMP, REG, REG
-JNE,  // JNE, LABEL
 JIE,  // JIE, LABEL
+JNE,  // JNE, LABEL
 JNZ,  // JNZ, LABEL
 JGE,  // JGE, LABEL
 JG,   // JG,  LABEL
@@ -39,20 +51,10 @@ JLE,  // JLE, LABEL
 NOP,  // NOP
 
 // Bitwise operations:
-SHR,  // SHR, REG, REG	
+SHR,  // SHR, REG, REG
 SHL,  // SHL, REG, REG
 XOR,  // XOR, REG, REG
 AND,  // AND, REG, REG
-
-// Misc:
-NOR,  // NOR, REG
-NEG,  // NEG, REG
-CLR,  // CLR (clear flags)
-INC,  // INC, REG
-DEC,  // DEC, REG
-SUF,  // SUF (Setup stack frame)
-DSF,  // DSF (Destroy stack frame)
-HLT,  // HLT
 
 // Register addressing opcodes:
 MOV_REG,  // MOV_REG,  REG, REG
@@ -64,8 +66,10 @@ IMUL_REG, // IMUL_REG, REG, REG
 IDIV_REG, // IDIV_REG, REG, REG
 PUSH_REG, // PUSH_REG, REG
 POP_REG,  // POP_REG,  REG
-	
+
 /*
+Register-memory addressing opcodes:
+
 Work in progress:
 MOV_IMM_MEM,   // MOV_IMM_MEM, DATA, PTR
 MOV_STR_MEM,   // MOV_STR_MEM, DATA, PTR
@@ -80,7 +84,7 @@ SUBSS_IMM,  // SUBSS_IMM,  FP64, FP_REG
 MULSS_IMM,  // MULSS_IMM,  FP64, FP_REG
 DIVSS_IMM,  // DIVSS_IMM,  FP64, FP_REG
 IMULSS_IMM, // IMULSS_IMM, FP64, FP_REG
-IDIVSS_IMM, // IDIVSS_IMM, FP64, FP_REG
+IDIVSS_IMM, // IDIVSS_IMM, FP64, FP_REG	
 PUSHF_IMM,  // PUSHF_IMM,  FP64, FP_REG
 
 // Floating point register instructions:
@@ -89,11 +93,12 @@ ADDSS_REG,  // ADDSS_REG,  FP_REG, FP_REG
 SUBSS_REG,  // SUBSS_REG,  FP_REG, FP_REG
 MULSS_REG,  // MULSS_REG,  FP_REG, FP_REG
 DIVSS_REG,  // DIVSS_REG,  FP_REG, FP_REG
-IMULSS_REG, // IMULSS_REG, X0, FP_REG
-IDIVSS_REG, // IDIVSS_REG, X0, FP_REG
-FPOP_REG,   // FPOP_REG,   FP_REG
+IMULSS_REG, // IMULSS_REG, FP_REG, FP_REG
+IDIVSS_REG, // IDIVSS_REG, FP_REG, FP_REG
+PUSHF_REG,  // PUSHF_REG,  FP_REG
+POPF_REG,   // FPOP_REG,   FP_REG
 
-// Floating point control flow:
+// Control-flow:
 FCMP,      // FCMP, FP_REG, FP_REG
 FCMP_IMM,  // FCMP_IMM, FP64, FP_REG
 FJNE,      // FJNE, LABEL
