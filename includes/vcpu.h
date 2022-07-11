@@ -153,8 +153,8 @@ enum mnemonics {
 
 // cpu structure (holds instruction ptr, stack ptr and more)
 typedef struct cpu {
-    // Instructions:
-    qword *instructions;
+    	// Instructions:
+    	qword *instructions;
 	qword current_instruction, instruction_length;
 
 	// CPU internals:
