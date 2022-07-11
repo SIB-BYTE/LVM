@@ -5,14 +5,18 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef unsigned char byte;
-typedef unsigned int dword;
-typedef unsigned long qword;
+// Ease of typing more fit for a virtual machine:
 typedef double f64;
+typedef unsigned long qword;
 
+// Colors:
 #define RED "\x1b[0;31m"
 #define PUR "\x1b[0;34m"
 #define BLU "\x1b[0;32m"
+#define WHI "\x1b[1;37m"
+
+// Marco-defined functions:
+#define LENGTH(array) sizeof(array) / sizeof(*array)
 
 // General purpose registers:
 enum GRPs {
@@ -32,6 +36,22 @@ enum FPRs {
 	X4 = 0x04
 };
 
+// Flag structures:
+typedef struct flags {
+	unsigned char lf : 1;
+	unsigned char gf : 1;
+	unsigned char zf : 1;
+	unsigned char equ_fl : 1;
+} flag_t;
+
+// Floating flag structures:
+typedef struct float_flags {
+	unsigned char f_lf : 1;
+	unsigned char f_gf : 1;
+	unsigned char f_zf : 1;
+	unsigned char f_equ_fl : 1;
+} float_flags_t;
+
 // Instruction map:
 enum mnemonics {
 	// Immediate addressing opcodes:
@@ -40,29 +60,30 @@ enum mnemonics {
 	SUB_IMM,  // SUB_IMM,  IMM32/IMM64, REG
 	MUL_IMM,  // MUL_IMM,  IMM32/IMM64, REG
 	DIV_IMM,  // DIV_IMM,  IMM32/IMM64, REG
-	IDIV_IMM, // IDIV_IMM, IMM32/IMM64, REG
 	IMUL_IMM, // IMUL_IMM, IMM32/IMM64, REG
+	IDIV_IMM, // IDIV_IMM, IMM32/IMM64, REG
 	PUSH_IMM, // PUSH_IMM, IMM32/IMM64
 	CMP_IMM,  // CMP_IMM,  REG, IMM32/IMM64
 
 	// Misc:
 	NOR,  // NOR, REG
 	NEG,  // NEG, REG
-	CLR,  // CLR (clear flags)
-	CLF,  // CLF (clear floating point flags)
+	CLF,  // CLF (clear flags)
 	INC,  // INC, REG
 	DEC,  // DEC, REG
 	SUF,  // SUF (Setup stack frame)
 	DSF,  // DSF (Destroy stack frame)
 	HLT,  // HLT
+	DUMP_STACK, // PRINT_STACK
+	DUMP_CPU_INFO, // DUMP_CPU_INFO
 
 	// Control-flow instructions:
 	CALL, // CALL, LABEL
 	RET,  // RET
 	JMP,  // JMP, LABEL
 	CMP,  // CMP, REG, REG
-	JNE,  // JNE, LABEL
 	JIE,  // JIE, LABEL
+	JNE,  // JNE, LABEL
 	JNZ,  // JNZ, LABEL
 	JGE,  // JGE, LABEL
 	JG,   // JG,  LABEL
@@ -87,10 +108,17 @@ enum mnemonics {
 	PUSH_REG, // PUSH_REG, REG
 	POP_REG,  // POP_REG,  REG
 
-	// Register-memory addressing opcodes:
-	MOV_MEM,  // MOV_MEM, PTR, REG
+	/*
+	Register-memory addressing opcodes:
 
-		// Floating point immediate instructions:
+	Work in progress:
+	MOV_IMM_MEM,   // MOV_IMM_MEM, DATA, PTR
+	MOV_STR_MEM,   // MOV_STR_MEM, DATA, PTR
+	PRINT_IMM_MEM, // PRINT_IMM_MEM
+	PRINT_STR_MEM, // PRINT_STR_MEM
+	*/
+
+	// Floating point immediate instructions:
 	MOVSS_IMM,  // MOVSS_IMM,  FP64, FP_REG
 	ADDSS_IMM,  // ADDSS_IMM,  FP64, FP_REG
 	SUBSS_IMM,  // SUBSS_IMM,  FP64, FP_REG
@@ -101,14 +129,15 @@ enum mnemonics {
 	PUSHF_IMM,  // PUSHF_IMM,  FP64, FP_REG
 
 	// Floating point register instructions:
-	MOVSS_REG,  // MOVSS_REG,  REG, REG
-	ADDSS_REG,  // ADDSS_REG,  REG, REG
-	SUBSS_REG,  // SUBSS_REG,  REG, REG
-	MULSS_REG,  // MULSS_REG,  REG, REG
-	DIVSS_REG,  // DIVSS_REG,  REG, REG
-	IMULSS_REG, // IMULSS_REG, REG, REG
-	IDIVSS_REG, // IDIVSS_REG, REG, REG
-	FPOP_REG,   // FPOP_REG,   REG
+	MOVSS_REG,  // MOVSS_REG,  FP_REG, FP_REG
+	ADDSS_REG,  // ADDSS_REG,  FP_REG, FP_REG
+	SUBSS_REG,  // SUBSS_REG,  FP_REG, FP_REG
+	MULSS_REG,  // MULSS_REG,  FP_REG, FP_REG
+	DIVSS_REG,  // DIVSS_REG,  FP_REG, FP_REG
+	IMULSS_REG, // IMULSS_REG, FP_REG, FP_REG
+	IDIVSS_REG, // IDIVSS_REG, FP_REG, FP_REG
+	PUSHF_REG,  // PUSHF_REG,  FP_REG
+	POPF_REG,   // FPOP_REG,   FP_REG
 
 	// Control-flow:
 	FCMP,      // FCMP, FP_REG, FP_REG
@@ -120,46 +149,53 @@ enum mnemonics {
 	FJG,       // FJG,  LABEL
 	FJL,       // FJL,  LABEL
 	FJLE,      // FJLE, LABEL
-	// Misc:
 };
 
 // cpu structure (holds instruction ptr, stack ptr and more)
 typedef struct cpu {
-  // Instructions:
-  dword *instructions, instruction_length;
-	dword current_instruction;
+    // Instructions:
+    qword *instructions;
+	qword current_instruction, instruction_length;
 
 	// CPU internals:
-	dword registers[5], ip;
+	qword registers[5], ip;
 
 	// floating-point registers
 	f64 floating_registers[5];
 
 	// Instruction operands:
-	dword src, dst;
+	qword src, dst;
 
-	// Stack:
-	dword sp, bp;
-	dword *stack;
+	// Integer memory stack:
+	qword *integer_stack;
+	int sp, stack_length, stack_capacity;
+
+	// Floating point memory stack:
+	f64 *fp_stack;
+	int fp_sp, fp_stack_length, fp_stack_capacity;
 
 	// Flags:
-	dword zf, lf, gf;
+	flag_t flags;
+	float_flags_t float_flags;
 } cpu_t;
 
-// vm functions:
+// Virtual CPU functions:
 void run_cpu(cpu_t *);
 void execute(cpu_t *);
 void destroy_cpu(cpu_t *);
 void dump_cpu_info(cpu_t *);
-cpu_t *new_cpu(dword *, dword, dword);
+void halt_and_catch_fire(cpu_t *);
+cpu_t *new_cpu(qword *, qword, qword);
 
-// stack functions:
-#define push(cpu, data) (cpu->stack[cpu->sp] = data)
-#define pop(cpu) (cpu->stack[cpu->sp--])
+// Flags:
+void clear_flags(cpu_t *);
+void set_flags(cpu_t *, qword, qword);
 
-#ifdef DEBUG
-const char *bind_name(dword instruction);
-#endif
+// Floating point flags:
+void set_floating_flags(cpu_t *, f64, f64);
+
+// Debugging:
+const char *bind_name(qword instruction);
 
 #endif
 
