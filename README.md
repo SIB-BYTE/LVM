@@ -13,7 +13,7 @@
 5.) ???
 
 # What is a virtual machine?
-Whenever you think about the word "virtual machine" you most likely think of operating system virtual machine, this type of virtual machine isn't that. This type of virtual machine is a piece of software that emulates how a processor internally works, fetching operands, decoding opcodes from mnemonics and what not. They have many uses such as: interpretered programming languages, it's also used for certain obfuscation techniques where we use a virtual machine to emulate the program so reverse engineers have another ISA to work around, it's really interesting. But we feed these byte-code ISA's that the virtual machine can emulate and run the instructions in a run-time environment, the given instruction set is defined below:
+Whenever you think about the word "virtual machine" you most likely think of operating system virtual machine, this type of virtual machine isn't that. This type of virtual machine is a piece of software that emulates how a processor internally works, fetching operands, decoding opcodes from mnemonics and what not. They have many uses such as: interpreted programming languages, it's also used for certain obfuscation techniques where we use a virtual machine to emulate the program so reverse engineers have another ISA to work around, it's really interesting. But we feed these byte-code ISA's that the virtual machine can emulate and run the instructions in a run-time environment, the given instruction set is defined below:
 
 # Instruction set synax:
 ```
