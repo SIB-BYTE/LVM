@@ -2,11 +2,15 @@
 64-bit RISC-based virtual machine made in C 
 
 # TODO:
-1.) Implement an assembler so we can have labels and have string support.
+1.) Implement an assembler so we can have labels and have string support along with syntactical error detection.
 
-2.) Profit???
+2.) Fix stack overflows.
 
-3.) ???
+3.) Fix issues with cascading instructions fucking with the output
+
+4.) Profit???
+
+5.) ???
 
 # What is a virtual machine?
 Whenever you think about the word "virtual machine" you most likely think of operating system virtual machine, this type of virtual machine isn't that. This type of virtual machine is a piece of software that emulates how a processor internally works, fetching operands, decoding opcodes from mnemonics and what not. They have many uses such as: interpretered programming languages, it's also used for certain obfuscation techniques where we use a virtual machine to emulate the program so reverse engineers have another ISA to work around, it's really interesting. But we feed these byte-code ISA's that the virtual machine can emulate and run the instructions in a run-time environment, the given instruction set is defined below:
