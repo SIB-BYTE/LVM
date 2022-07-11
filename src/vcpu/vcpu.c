@@ -207,15 +207,15 @@ const char *bind_name(qword instruction)
 	  case INC:      return "INC";
 	  case DEC:      return "DEC";
 	  case SUF:      return "SUF";
-      case RET:      return "RET";
+      	  case RET:      return "RET";
 	  case CALL:     return "CALL";
-      case JMP:      return "JMP";
+          case JMP:      return "JMP";
 	  case JIE:      return "JIE";
 	  case JNZ:      return "JNZ";
-	  case JNE:		 return "JNE";
+	  case JNE:	 return "JNE";
 	  case JGE:      return "JGE";
-	  case JG:		 return "JG";
-	  case JL:		 return "JL";
+	  case JG:	 return "JG";
+	  case JL:	 return "JL";
 	  case JLE:      return "JLE";
 	  case NOP:      return "NOP";
 	  case SHR:      return "SHR";
@@ -229,10 +229,10 @@ const char *bind_name(qword instruction)
 	  case MOV_IMM:  return "MOV_IMM";
 	  case ADD_IMM:  return "ADD_IMM";
 	  case SUB_IMM:  return "SUB_IMM";
-      case MUL_IMM:  return "MUL_IMM";
-      case DIV_IMM:  return "DIV_IMM";
-      case IMUL_IMM: return "IMUL_IMM";
-      case IDIV_IMM: return "IDIV_IMM";
+      	  case MUL_IMM:  return "MUL_IMM";
+      	  case DIV_IMM:  return "DIV_IMM";
+      	  case IMUL_IMM: return "IMUL_IMM";
+      	  case IDIV_IMM: return "IDIV_IMM";
 	  case MOV_REG:  return "MOV_REG";
 	  case ADD_REG:  return "ADD_REG";
 	  case SUB_REG:  return "SUB_REG";
@@ -273,7 +273,7 @@ const char *bind_name(qword instruction)
 	  case FJG:        return "FJG";
 	  case FJL:        return "FJL";
 	  case FJLE:       return "FJLE";
-	  default:		   return "Why?";
+	  default:	   return "Why?";
 	}
 }
 
