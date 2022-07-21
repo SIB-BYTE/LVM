@@ -78,7 +78,7 @@ void execute(cpu_t *cpu)
 
 		// Control flow instructions:
 		case JMP:     cpu->ip = cpu->src; break;
-		case CMP_IMM: set_flags(cpu, cpu->src, cpu->registers[cpu->dst]);     cpu->ip += 3; break;
+		case CMP_IMM: set_flags(cpu, cpu->src, cpu->registers[cpu->dst]); cpu->ip += 3; break;
 		case CMP:     set_flags(cpu, cpu->registers[cpu->src], cpu->registers[cpu->dst]); cpu->ip += 3; break;
 		case JNZ:     if(cpu->flags.zf) cpu->ip = cpu->src; else cpu->ip += 2; break;
 		case JLE:     if(cpu->flags.lf || cpu->flags.equ_fl) cpu->ip = cpu->src; else cpu->ip += 2; break;
@@ -129,12 +129,12 @@ void execute(cpu_t *cpu)
 		// Floating-point control flow instructions:
 		case FCMP_IMM: set_floating_flags(cpu, (f64) cpu->src, (f64) cpu->floating_registers[cpu->dst]); cpu->ip += 3; break;
 		case FJNE:     if(!cpu->float_flags.f_equ_fl) cpu->ip = cpu->src; else cpu->ip += 2; break;
-		case FJNZ:     if(cpu->float_flags.f_zf) cpu->ip = cpu->src; else cpu->ip += 2;      break;
+		case FJNZ:     if(cpu->float_flags.f_zf) cpu->ip = cpu->src; else cpu->ip += 2;     break;
 		case FJIE:     if(cpu->float_flags.f_equ_fl) cpu->ip = cpu->src; else cpu->ip += 2;  break;
 		case FJLE:     if(cpu->float_flags.f_lf || cpu->float_flags.f_equ_fl) cpu->ip = cpu->src; else cpu->ip += 2; break;
 		case FJGE:     if(cpu->float_flags.f_gf || cpu->float_flags.f_equ_fl) cpu->ip = cpu->src; else cpu->ip += 2; break;
-		case FJG:      if(cpu->float_flags.f_gf) cpu->ip = cpu->src; else cpu->ip += 2;      break;
-		case FJL:      if(cpu->float_flags.f_lf) cpu->ip = cpu->src; else cpu->ip += 2;		 break;
+		case FJG:      if(cpu->float_flags.f_gf) cpu->ip = cpu->src; else cpu->ip += 2; break;
+		case FJL:      if(cpu->float_flags.f_lf) cpu->ip = cpu->src; else cpu->ip += 2;	break;
 
 		// Invalid operation:
 		default: halt_and_catch_fire(cpu);
