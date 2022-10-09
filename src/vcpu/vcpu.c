@@ -85,16 +85,16 @@ void execute(cpu_t *cpu)
 		case JGE:     if(cpu->flags.gf || cpu->flags.equ_fl) cpu->ip = cpu->src; else cpu->ip += 2; break;
 		case JIE:     if(cpu->flags.equ_fl)  cpu->ip = cpu->src; else cpu->ip += 2; break;
 		case JNE:     if(!cpu->flags.equ_fl) cpu->ip = cpu->src; else cpu->ip += 2; break;
-		case JG:      if(cpu->flags.gf) cpu->ip = cpu->src; else cpu->ip += 2; break;
-		case JL:      if(cpu->flags.lf) cpu->ip = cpu->src; else cpu->ip += 2; break;
+		case JG:      if(cpu->flags.gf) cpu->ip = cpu->src; else cpu->ip += 2;     break;
+		case JL:      if(cpu->flags.lf) cpu->ip = cpu->src; else cpu->ip += 2;     break;
 
 		// Misc:
 		case CLF: clear_flags(cpu); cpu->ip++; break;
 		case NEG: cpu->registers[cpu->src] =  -(cpu->registers[cpu->src]); cpu->ip += 2; break;
 		case INC: cpu->registers[cpu->src]++; cpu->ip += 2; break;
 		case DEC: cpu->registers[cpu->src]--; cpu->ip += 2; break;
-		case DUMP_STACK: dump_stack(cpu); cpu->ip++; break;
-		case DUMP_CPU_INFO: dump_cpu_info(cpu); cpu->ip++; break;
+		case DUMP_STACK: dump_stack(cpu); cpu->ip++;        break;
+		case DUMP_CPU_INFO: dump_cpu_info(cpu); cpu->ip++;  break;
 		case NOP: cpu->ip++; break;
 		case HLT: return;
 
