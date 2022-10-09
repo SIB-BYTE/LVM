@@ -134,7 +134,7 @@ void execute(cpu_t *cpu)
 		case FJLE:     if(cpu->float_flags.f_lf || cpu->float_flags.f_equ_fl) cpu->ip = cpu->src; else cpu->ip += 2; break;
 		case FJGE:     if(cpu->float_flags.f_gf || cpu->float_flags.f_equ_fl) cpu->ip = cpu->src; else cpu->ip += 2; break;
 		case FJG:      if(cpu->float_flags.f_gf) cpu->ip = cpu->src; else cpu->ip += 2; break;
-		case FJL:      if(cpu->float_flags.f_lf) cpu->ip = cpu->src; else cpu->ip += 2;	break;
+		case FJL:      if(cpu->float_flags.f_lf) cpu->ip = cpu->src; else cpu->ip += 2;break;
 
 		// Invalid operation:
 		default: halt_and_catch_fire(cpu);
